@@ -1,24 +1,18 @@
 // webpack.config.js
 const webpack = require('webpack');
 const path = require('path');
-const CommonsChunkPlugin = require("../../lib/optimize/CommonsChunkPlugin");
 
 const config = {
-    context: path.resolve(__dirname, 'src'),
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-
+    context: path.resolve(__dirname),
     entry: {
-        pageA: "./src/js/index.js"
+        application: './src/js/index.js',
+        common: 'react'
     },
     output: {
-        path: path.join(__dirname, "js"),
-        filename: "[name].bundle.js",
-        chunkFilename: "[id].chunk.js"
+        path: path.join(__dirname, '..', '_dist', 'static', 'js'),
+        filename: '[name].bundle.js',
+        chunkFilename: '[id].chunk.js'
     },
-
     module: {
         rules: [{
             test: /\.js$/,
@@ -34,9 +28,9 @@ const config = {
         }]
     },
     plugins: [
-        new CommonsChunkPlugin({
-            filename: "commons.js",
-            name: "commons"
+        new webpack.optimize.CommonsChunkPlugin({
+            filename: 'common.js',
+            name: 'common'
         })
     ]
 }
